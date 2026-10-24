@@ -1,0 +1,13 @@
+This repository contains a patch against EchoMuse:
+
+  EchoMuse — https://github.com/wilbowes/EchoMuse
+  Copyright (c) 2026 Wil Bowes
+  MIT License
+
+The patch is provided under the MIT License (see LICENSE). It does not include
+EchoMuse source code; scripts/build.sh clones the upstream repository at the
+pinned tag and applies the patch locally.
+
+The Echo Dot 2 is a discontinued Amazon device. You are responsible for the
+legality of modifying hardware you own and for accepting that an EA firmware
+build may have its own upstream caveats.

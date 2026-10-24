@@ -1,0 +1,5 @@
+artifacts/
+build/
+*.bin
+*.server
+.DS_Store
