@@ -1,0 +1,26 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: build (docker NDK image + Go 1.24)
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/build.sh "$RUNNER_TEMP/echomuse-build"
+      - name: checksums
+        run: sha256sum artifacts/server > artifacts/server.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: server-ref-uplink
+          path: |
+            artifacts/server
+            artifacts/server.sha256
+          if-no-files-found: error
