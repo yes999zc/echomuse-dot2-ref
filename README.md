@@ -11,7 +11,10 @@ relying on the device's seven-mic cancellation.
   more risk than upgrading.
 - Patch: [`patches/0001-ref-uplink-v2.19.0-ea.1.patch`](patches/0001-ref-uplink-v2.19.0-ea.1.patch)
   (3 files, +68 lines)
-- Status: **built and offline-validated, not yet installed on a device** (2026-10-24)
+- Status: **installed on a device (2026-10-24)**. The controller sees the `ref_uplink` capability and
+  receives 5120-byte 2ch blocks; live AEC quality validation is still in progress in the consuming
+  controller (early runs show the reference arriving but cancellation is weak, so do not expect the
+  offline 38 dB ERLE on day one).
 
 ## Why
 

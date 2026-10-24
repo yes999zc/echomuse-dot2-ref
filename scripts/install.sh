@@ -42,7 +42,10 @@ sh_cmd "cp /data/local/tmp/server.new /data/local/bin/$TARGET && chmod 755 /data
 echo "written /data/local/bin/$TARGET"
 
 # Restart: start_server.sh (parent shell) brings the server back and re-reads the symlink.
-PID="$(sh_cmd 'ps' | tr -s ' ' | awk -F' ' '$NF=="/data/local/bin/server"{print $2; exit}')"
+# The device's toybox ps prints a NAME column that may be the full path; match on
+# the path anywhere in the line and take the PID column.
+server_pid() { sh_cmd 'ps' | tr -d '\r' | awk '/data\/local\/bin\/server/ {print $2; exit}'; }
+PID="$(server_pid)"
 if [ -n "${PID:-}" ]; then
   sh_cmd "kill -9 $PID" >/dev/null || true
 else
@@ -53,7 +56,7 @@ sh_cmd "ln -sf $TARGET /data/local/bin/server"
 echo "waiting for the new firmware..."
 for i in $(seq 1 20); do
   sleep 1
-  PID="$(sh_cmd 'ps' | tr -s ' ' | awk -F' ' '$NF=="/data/local/bin/server"{print $2; exit}')"
+  PID="$(server_pid)"
   if [ -n "${PID:-}" ]; then
     sleep 2
     LOG="$("$ADB" -s "$SERIAL" shell "su -c 'cat /tmp/server.log'" 2>/dev/null | tail -c 4000 || true)"
@@ -66,6 +69,6 @@ done
 
 echo "new firmware did not report ready; rolling back to $CURRENT" >&2
 sh_cmd "ln -sf $CURRENT /data/local/bin/server"
-PID="$(sh_cmd 'ps' | tr -s ' ' | awk -F' ' '$NF=="/data/local/bin/server"{print $2; exit}')"
+PID="$(server_pid)"
 [ -n "${PID:-}" ] && sh_cmd "kill -9 $PID" >/dev/null || true
 exit 1

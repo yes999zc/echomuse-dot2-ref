@@ -14,7 +14,7 @@ case "$CURRENT" in
 esac
 echo "switching $CURRENT -> $TARGET"
 sh_cmd "ln -sf $TARGET /data/local/bin/server"
-PID="$(sh_cmd 'ps' | tr -s ' ' | awk -F' ' '$NF=="/data/local/bin/server"{print $2; exit}')"
+PID="$(sh_cmd 'ps' | tr -d '\r' | awk '/data\/local\/bin\/server/ {print $2; exit}')"
 [ -n "${PID:-}" ] && sh_cmd "kill -9 $PID" >/dev/null || true
 sleep 5
 echo "now on $(sh_cmd 'readlink /data/local/bin/server' | tr -d '\r')"

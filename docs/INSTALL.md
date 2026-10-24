@@ -73,3 +73,10 @@ back on its own after repeated fast crashes.
 
 Switch the symlink to the slot holding the original firmware (`./scripts/rollback.sh` until the
 active slot is the old one) and restart. Nothing outside `/data/local/bin/` is modified.
+
+
+## Installed
+
+2026-10-24: installed on `G090LF0964340RN6` (server_b), running build `20261024-1911-dev`.
+Device logs `Registered as ...` and the controller's handshake sees `ref_uplink`; uplink blocks are
+5120 bytes (2ch). server_a still holds the previous firmware for `./scripts/rollback.sh`.
