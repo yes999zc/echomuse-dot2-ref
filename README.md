@@ -6,6 +6,9 @@ A small, self-contained firmware patch for **EchoMuse on the Amazon Echo Dot 2**
 relying on the device's seven-mic cancellation.
 
 - Upstream: [wilbowes/EchoMuse](https://github.com/wilbowes/EchoMuse) (MIT)
+- Used by: [yes999zc/rui-dot2-bridge](https://github.com/yes999zc/rui-dot2-bridge) — an out-of-tree
+  adapter that turns the unlocked Dot 2 into a voice satellite for [rui](https://github.com/yes999zc/rui)
+  (optional on that side: the default route keeps AEC on the device and does not need this patch)
 - Base tag: **`v2.19.0-ea.1`** — the first release that contains the de-aliasing reference
   (`internal/aec/dealias.go`, commit `63c0fe9`). `v2.18.1` does not have it; back-porting is
   more risk than upgrading.
